@@ -1,0 +1,50 @@
+table.reddit {
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+th.reddit-header {
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    font-size: 1.0em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+
+tr.reddit-row-even {
+    background-color: hsl(0, 20%, 90%);
+}
+
+td {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.reddit-column {
+    margin: 1em;
+}
+
+.ui-button, .ui-widget, .ui-state-default, .ui-corner-all, .ui-button-text-only {
+    font-size: 0.5em;
+}
+
+div.debug {
+    background-color:hsl(0, 20%, 90%);
+    margin-bottom: 1em;
+}
+
+div.formOuter {
+    margin-bottom: 1em;
+}
+
+div.selectUser, div.addUser {
+    margin-bottom: 1em;
+    border-style: solid;
+    border-width: 1px;
+    padding: 0.5em;
+}
+
+div.messages {
+    background-color:hsl(0, 30%, 90%);
+    font-weight:bold;
+}
