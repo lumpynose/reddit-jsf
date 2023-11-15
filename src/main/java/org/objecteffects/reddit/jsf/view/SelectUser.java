@@ -11,9 +11,7 @@ import org.slf4j.Logger;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.validator.ValidatorException;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
@@ -22,7 +20,7 @@ import jakarta.inject.Named;
  */
 @Named
 @RequestScoped
-public class Users implements Serializable {
+public class SelectUser implements Serializable {
     private static final long serialVersionUID = -570500230181100578L;
 
     @Inject
@@ -78,7 +76,18 @@ public class Users implements Serializable {
     public void setSelectUser(final String _user) {
         this.log.info("selectUser: {}", _user);
 
+        if (_user == null || _user.isEmpty()) {
+            return;
+        }
+
         this.selectUser = _user;
+
+        final String msg = this.selectUser + " selected.";
+
+        final FacesMessage facesMsg =
+                new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
 
     /**
@@ -93,6 +102,10 @@ public class Users implements Serializable {
      */
     public void setaddUser(final String _user) {
         this.log.info("addUser: {}", _user);
+
+        if (this.selectUser != null && !this.selectUser.isEmpty()) {
+            return;
+        }
 
         this.addUser = _user;
 
@@ -117,27 +130,25 @@ public class Users implements Serializable {
      * @return nothing
      */
     public String result() {
-        return null;
-    }
+        String user = null;
 
-    /**
-     * @param context
-     * @param component
-     * @param name
-     * @throws ValidatorException
-     */
-    public void validateUser(final FacesContext context,
-            final UIComponent component,
-            final String name) throws ValidatorException {
-        if (name == null || name.isEmpty()) {
-            return;
+        if (this.selectUser != null) {
+            user = this.selectUser;
         }
 
-        if (this.userService.exists(name)) {
-            final FacesMessage msg =
-                    new FacesMessage("Name already in use");
-
-            throw new ValidatorException(msg);
+        if (this.addUser != null) {
+            user = this.addUser;
         }
+
+        this.log.info("user: {}", user);
+
+        this.selectUser = null;
+        this.addUser = null;
+
+        if (user == null) {
+            return null;
+        }
+
+        return "/modifyuser.xhtml?faces-redirect=true";
     }
 }

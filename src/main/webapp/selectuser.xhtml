@@ -12,14 +12,13 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <h:outputStylesheet name="css/stylesheet.css" />
-    <title>Reddit users</title>
+    <title>Select or add user</title>
 </h:head>
 
 <h:body>
     <div>
-
         <header>
-            <h2>Reddit users</h2>
+            <h2>Select or add user</h2>
         </header>
 
         <main>
@@ -34,10 +33,11 @@
                             value="Select user:" />
                         <br />
                         <h:selectOneMenu id="selectUser"
-                            value="#{users.selectUser}" editable="true">
+                            value="#{selectUser.selectUser}"
+                            editable="true">
                             <f:selectItem itemLabel="Select One"
                                 itemValue="" />
-                            <f:selectItems value="#{users.userNames}" />
+                            <f:selectItems value="#{selectUser.userNames}" />
                         </h:selectOneMenu>
                         <div class="messages">
                             <h:message for="selectUser" />
@@ -48,9 +48,8 @@
                         <h:outputLabel for="addUser" value="Add user:" />
                         <br />
                         <h:inputText id="addUser" title="Add user"
-                            value="#{users.addUser}"
-                            validator="#{users.validateUser}">
-                            <!--                             <f:validator validatorId="userValidator" /> -->
+                            value="#{selectUser.addUser}">
+                            <f:validator validatorId="userValidator" />
                             <f:validateLength minimum="2" />
                         </h:inputText>
                         <div class="messages">
@@ -59,15 +58,13 @@
                     </div>
 
                     <h:commandButton value="Submit"
-                        action="#{users.result}" />
+                        action="#{selectUser.result}" />
                 </h:form>
             </div>
-
 
             <p>
                 <h:link value="start over" outcome="/index.xhtml" />
             </p>
-
         </main>
     </div>
 </h:body>

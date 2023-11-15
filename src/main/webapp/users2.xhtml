@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="jakarta.faces.facelets" xmlns:f="jakarta.faces.core"
+    xmlns:h="jakarta.faces.html" xmlns:o="https://omnifaces.org/ui"
+    xmlns:of="https://omnifaces.org/functions"
+    xmlns:p="https://primefaces.org/ui"
+    xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h:outputStylesheet name="css/stylesheet.css" />
+    <title>Reddit users</title>
+</h:head>
+
+<h:body>
+    <div>
+
+        <header>
+            <h2>Reddit users</h2>
+        </header>
+
+        <main>
+            <div class="formOuter">
+                <h:form>
+                    <h:panelGrid id="gridId" columns="1" cellpadding="2">
+                        <h:messages class="messages" />
+
+                        <h:outputLabel for="selectUser"
+                            value="Select user:" />
+                        <h:selectOneMenu id="selectUser"
+                            value="#{users.selectUser}" editable="true">
+                            <f:selectItem itemLabel="Select One"
+                                itemValue="" />
+                            <f:selectItems value="#{users.userNames}" />
+                        </h:selectOneMenu>
+                        <h:message for="selectUser" class="messages"/>
+
+                        <h:outputLabel for="addUser" value="Add user:" />
+                        <h:inputText id="addUser" title="Add user"
+                            value="#{users.addUser}">
+                            <f:validator validatorId="userValidator" />
+                            <f:validateLength minimum="2" />
+                        </h:inputText>
+                        <h:message for="addUser" class="messages"/>
+
+                        <h:commandButton value="Submit"
+                            action="#{users.result}" />
+                    </h:panelGrid>
+                </h:form>
+            </div>
+
+
+            <p>
+                <h:link value="start over" outcome="/index.xhtml" />
+            </p>
+
+        </main>
+    </div>
+</h:body>
+
+</html>

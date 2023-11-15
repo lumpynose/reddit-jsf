@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.objecteffects.reddit.jsf.service.UserService;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
@@ -11,11 +12,14 @@ import jakarta.faces.validator.FacesValidator;
 import jakarta.faces.validator.Validator;
 import jakarta.faces.validator.ValidatorException;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 /**
  *
  */
 @FacesValidator(managed = true)
+@Named
+@RequestScoped
 public class UserValidator implements Validator<String>, Serializable {
     private static final long serialVersionUID = -7192868908359756394L;
 

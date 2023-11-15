@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="jakarta.tags.core" xmlns:ui="jakarta.faces.facelets"
+    xmlns:f="jakarta.faces.core" xmlns:h="jakarta.faces.html"
+    xmlns:o="https://omnifaces.org/ui"
+    xmlns:of="https://omnifaces.org/functions"
+    xmlns:p="https://primefaces.org/ui"
+    xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <c:set var="title" value="Modify user #{user}"></c:set>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h:outputStylesheet name="css/stylesheet.css" />
+    <title>#{title}</title>
+</h:head>
+
+<h:body>
+    <header>
+        <h2>#{title}</h2>
+    </header>
+
+    <main>
+        <div class="messages">
+            <h:messages />
+        </div>
+
+        <div>
+            <h:form>
+                <h:selectManyCheckbox value="#{data}">
+                    <f:selectItem itemValue="1" itemLabel="Item 1" />
+                    <f:selectItem itemValue="2" itemLabel="Item 2" />
+                </h:selectManyCheckbox>
+            </h:form>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            <h:link value="start over" outcome="/index.xhtml" />
+        </p>
+        <p>
+            <h:link value="select or add user"
+                outcome="/selectuser.xhtml" />
+        </p>
+    </footer>
+</h:body>
+</html>
