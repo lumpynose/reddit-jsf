@@ -29,12 +29,13 @@ public class SelectUser implements Serializable {
     @Inject
     private UserService userService;
 
-    private String selectUser;
-    private String addUser;
+    private String selectUser = null;
+    private String addUser = null;
+    private String user = null;
 
 //    @PostConstruct
 //    public void init() {
-//        this.log.info("init");
+//        this.log.debug("init");
 //    }
 
     /**
@@ -44,7 +45,7 @@ public class SelectUser implements Serializable {
      */
     public List<RedditUser> getUsers()
             throws IOException, InterruptedException {
-        this.log.info("getUsers");
+        this.log.debug("getUsers");
 
         final List<RedditUser> users =
                 this.userService.getUsers();
@@ -65,7 +66,7 @@ public class SelectUser implements Serializable {
             userNames.add(user.getName());
         }
 
-        this.log.info("userNames: {}", userNames);
+        this.log.debug("userNames: {}", userNames);
 
         return userNames;
     }
@@ -74,7 +75,7 @@ public class SelectUser implements Serializable {
      * @param _user
      */
     public void setSelectUser(final String _user) {
-        this.log.info("selectUser: {}", _user);
+        this.log.debug("selectUser: {}", _user);
 
         if (_user == null || _user.isEmpty()) {
             return;
@@ -101,7 +102,7 @@ public class SelectUser implements Serializable {
      * @param _user
      */
     public void setaddUser(final String _user) {
-        this.log.info("addUser: {}", _user);
+        this.log.debug("addUser: {}", _user);
 
         if (this.selectUser != null && !this.selectUser.isEmpty()) {
             return;
@@ -126,28 +127,33 @@ public class SelectUser implements Serializable {
         return this.addUser;
     }
 
+    public String getUser() {
+        return this.user;
+    }
+
     /**
      * @return nothing
      */
     public String result() {
-        String user = null;
-
         if (this.selectUser != null) {
-            user = this.selectUser;
+            this.user = this.selectUser;
         }
 
         if (this.addUser != null) {
-            user = this.addUser;
+            this.user = this.addUser;
         }
 
-        this.log.info("user: {}", user);
+        this.log.debug("user: {}", this.user);
 
         this.selectUser = null;
         this.addUser = null;
 
-        if (user == null) {
-            return null;
+        if (this.user == null) {
+            return "";
         }
+
+        FacesContext.getCurrentInstance().getExternalContext().getFlash()
+                .put("user", this.user);
 
         return "/modifyuser.xhtml?faces-redirect=true";
     }

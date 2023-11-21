@@ -38,7 +38,7 @@
     </servlet-mapping>
 
     <data-source>
-        <name>java:global/DataSourceRedditH2</name>
+        <name>java:global/DataSourceRedditEmbedH2</name>
         <class-name>org.h2.jdbcx.JdbcDataSource</class-name>
         <url>jdbc:h2:/home/rusty/reddit</url>
         <user>sa</user>

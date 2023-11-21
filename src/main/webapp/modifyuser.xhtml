@@ -3,23 +3,22 @@
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:c="jakarta.tags.core" xmlns:ui="jakarta.faces.facelets"
-    xmlns:f="jakarta.faces.core" xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets" xmlns:f="jakarta.faces.core"
+    xmlns:c="jakarta.tags.core" xmlns:h="jakarta.faces.html"
     xmlns:o="https://omnifaces.org/ui"
     xmlns:of="https://omnifaces.org/functions"
     xmlns:p="https://primefaces.org/ui"
     xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
-    <c:set var="title" value="Modify user #{user}"></c:set>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <h:outputStylesheet name="css/stylesheet.css" />
-    <title>#{title}</title>
+    <title>Modify user</title>
 </h:head>
 
 <h:body>
     <header>
-        <h2>#{title}</h2>
+        <h2>Modify user #{modifyUser.user}</h2>
     </header>
 
     <main>
@@ -29,10 +28,13 @@
 
         <div>
             <h:form>
-                <h:selectManyCheckbox value="#{data}">
-                    <f:selectItem itemValue="1" itemLabel="Item 1" />
-                    <f:selectItem itemValue="2" itemLabel="Item 2" />
+                <h:selectManyCheckbox value="#{modifyUser.item}">
+                    <f:selectItem itemValue="hide" itemLabel="hide" />
+                    <f:selectItem itemValue="upvote" itemLabel="upvote" />
                 </h:selectManyCheckbox>
+
+                <h:commandButton value="Submit"
+                    action="#{modifyUser.submit()}" />
             </h:form>
         </div>
     </main>
