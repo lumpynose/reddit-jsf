@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="jakarta.faces.facelets" xmlns:f="jakarta.faces.core"
+    xmlns:c="jakarta.tags.core" xmlns:h="jakarta.faces.html"
+    xmlns:o="https://omnifaces.org/ui"
+    xmlns:of="https://omnifaces.org/functions"
+    xmlns:p="https://primefaces.org/ui"
+    xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <c:if test="#{not result.ready}">
+        <meta http-equiv="refresh" content="5" />
+    </c:if>
+    <title>Display result</title>
+</h:head>
+
+<h:body>
+    <header>
+        <h2>Display result: #{result.counter}, #{result.ready}</h2>
+    </header>
+
+    <main>
+        <h:form>
+            <h:commandButton value="Cancel" action="result.cancel()" />
+        </h:form>
+    </main>
+</h:body>
+
+</html>
