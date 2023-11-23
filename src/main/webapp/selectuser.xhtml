@@ -25,11 +25,11 @@
         <main>
             <div class="formOuter">
                 <h:form>
-                    <div class="messages">
+                    <p class="messages">
                         <h:messages />
-                    </div>
+                    </p>
 
-                    <div class="selectUser">
+                    <p class="selectUser">
                         <h:outputLabel for="selectUser"
                             value="Select user:" />
                         <br />
@@ -38,14 +38,16 @@
                             editable="true">
                             <f:selectItem itemLabel="Select One"
                                 itemValue="" />
-                            <f:selectItems value="#{selectUser.userNames}" />
+                            <f:selectItems
+                                value="#{selectUser.userNames}" />
                         </h:selectOneMenu>
-                        <div class="messages">
-                            <h:message for="selectUser" />
-                        </div>
-                    </div>
+                    </p>
+                    
+                    <p class="messages">
+                        <h:message for="selectUser" />
+                    </p>
 
-                    <div class="addUser">
+                    <p class="addUser">
                         <h:outputLabel for="addUser" value="Add user:" />
                         <br />
                         <h:inputText id="addUser" title="Add user"
@@ -53,13 +55,16 @@
                             <f:validator validatorId="userValidator" />
                             <f:validateLength minimum="2" />
                         </h:inputText>
-                        <div class="messages">
-                            <h:message for="addUser" />
-                        </div>
-                    </div>
-
-                    <h:commandButton value="Submit"
-                        action="#{selectUser.result}" />
+                    </p>
+                    
+                    <p>
+                        <h:commandButton value="Submit"
+                            action="#{selectUser.result}" />
+                    </p>
+                    
+                    <p class="messages">
+                        <h:message for="addUser" />
+                    </p>
                 </h:form>
             </div>
 

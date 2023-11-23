@@ -22,19 +22,24 @@
     </header>
 
     <main>
-        <div class="messages">
+        <p class="messages">
             <h:messages />
-        </div>
+        </p>
 
         <div>
             <h:form>
-                <h:selectManyCheckbox value="#{modifyUser.item}">
-                    <f:selectItem itemValue="hide" itemLabel="hide" />
-                    <f:selectItem itemValue="upvote" itemLabel="upvote" />
-                </h:selectManyCheckbox>
+                <p>
+                    <h:selectManyCheckbox value="#{modifyUser.item}">
+                        <f:selectItem itemValue="hide" itemLabel="hide" />
+                        <f:selectItem itemValue="upvote"
+                            itemLabel="upvote" />
+                    </h:selectManyCheckbox>
+                </p>
 
-                <h:commandButton value="Submit"
-                    action="#{modifyUser.submit()}" />
+                <p>
+                    <h:commandButton value="Submit"
+                        action="#{modifyUser.submit()}" />
+                </p>
             </h:form>
         </div>
     </main>
@@ -43,6 +48,7 @@
         <p>
             <h:link value="start over" outcome="/index.xhtml" />
         </p>
+        
         <p>
             <h:link value="select or add user"
                 outcome="/selectuser.xhtml" />

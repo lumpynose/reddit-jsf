@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="jakarta.faces.facelets" xmlns:f="jakarta.faces.core"
     xmlns:c="jakarta.tags.core" xmlns:h="jakarta.faces.html"
-    xmlns:o="https://omnifaces.org/ui"
+    xmlns:fn="jakarta.tags.functions" xmlns:o="https://omnifaces.org/ui"
     xmlns:of="https://omnifaces.org/functions"
     xmlns:p="https://primefaces.org/ui"
     xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
@@ -13,18 +13,45 @@
     <c:if test="#{not result.ready}">
         <meta http-equiv="refresh" content="5" />
     </c:if>
-    <title>Display result</title>
+    <title>Friends</title>
 </h:head>
 
 <h:body>
     <header>
-        <h2>Display result: #{result.counter}, #{result.ready}</h2>
+        <h2>Friends</h2>
     </header>
 
     <main>
-        <h:form>
-            <h:commandButton value="Cancel" action="result.cancel()" />
-        </h:form>
+        <c:choose>
+            <c:when test="#{not result.ready}">
+                <p>
+                    <h:outputText value="Fetching: #{result.counter}" />
+                </p>
+            </c:when>
+
+            <c:otherwise>
+                <p>
+                    <h:outputText
+                        value="Result: #{fn:length(result.result)} friends" />
+                </p>
+                <ul>
+                    <ui:repeat value="#{result.result}" var="friend">
+                        <li><h:outputLink
+                                value="http://www.reddit.com/user/#{friend.name}">
+                                <h:outputText value="#{friend.name}" />
+                            </h:outputLink> <h:outputText value=", #{friend.karma}" />
+                            <h:outputText value=", #{friend.isBlocked}" />
+                            <h:outputText
+                                value=", #{friend.isSuspended}" /></li>
+                    </ui:repeat>
+                </ul>
+            </c:otherwise>
+        </c:choose>
+        <p>
+            <h:form>
+                <h:commandButton value="Cancel" action="result.cancel()" />
+            </h:form>
+        </p>
     </main>
 </h:body>
 

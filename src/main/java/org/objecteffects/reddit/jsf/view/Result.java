@@ -1,9 +1,14 @@
 package org.objecteffects.reddit.jsf.view;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
+
+import com.objecteffects.reddit.data.Friend;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -11,6 +16,8 @@ import jakarta.faces.annotation.ManagedProperty;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
+/**
+ */
 @Named
 @SessionScoped
 public class Result implements Serializable {
@@ -23,7 +30,7 @@ public class Result implements Serializable {
 
     @Inject
     @ManagedProperty("#{flash.result}")
-    private Future<String> result;
+    private Future<List<Friend>> result;
 
     /**
      */
@@ -37,6 +44,24 @@ public class Result implements Serializable {
      */
     public boolean getReady() {
         return this.result.isDone();
+    }
+
+    /**
+     * @return
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    public List<Friend> getResult()
+            throws InterruptedException, ExecutionException {
+        if (this.result.isDone()) {
+            final List<Friend> friends = this.result.get();
+
+            Collections.sort(friends, Collections.reverseOrder());
+
+            return friends;
+        }
+
+        return Collections.emptyList();
     }
 
     /**
