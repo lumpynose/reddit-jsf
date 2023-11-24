@@ -12,7 +12,6 @@ import com.objecteffects.reddit.data.Friend;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.annotation.ManagedProperty;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -31,16 +30,22 @@ public class ModifyUser implements Serializable {
     @Inject
     private ProcessModify processModify;
 
-    @Inject
-    @ManagedProperty("#{flash.user}")
-    private String user;
+//    @Inject
+//    @ManagedProperty("#{flash.user}")
+    private final String user = (String) FacesContext.getCurrentInstance()
+            .getExternalContext().getFlash().get("user");
 
     private List<String> item;
     private Future<List<Friend>> result;
 
+    /**
+     */
     @PostConstruct
     public void init() {
         this.log.debug("init");
+
+//        this.user = (String) FacesContext.getCurrentInstance()
+//                .getExternalContext().getFlash().get("user");
     }
 
     /**

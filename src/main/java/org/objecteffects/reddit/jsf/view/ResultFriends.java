@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import com.objecteffects.reddit.data.Friend;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -19,8 +19,8 @@ import jakarta.inject.Named;
 /**
  */
 @Named
-@SessionScoped
-public class Result implements Serializable {
+@ApplicationScoped
+public class ResultFriends implements Serializable {
     private static final long serialVersionUID = -4950508763640509054L;
 
     @Inject
@@ -30,6 +30,7 @@ public class Result implements Serializable {
 
 //    @Inject
 //    @ManagedProperty("#{flash.result}")
+    @SuppressWarnings("unchecked")
     private final Future<List<Friend>> result =
             (Future<List<Friend>>) FacesContext.getCurrentInstance()
                     .getExternalContext()
@@ -38,22 +39,9 @@ public class Result implements Serializable {
 
     /**
      */
-    @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
         this.log.debug("init");
-
-//        this.result = (Future<List<Friend>>) FacesContext.getCurrentInstance()
-//                .getExternalContext()
-//                .getFlash()
-//                .get("result");
-    }
-
-    /**
-     * @return
-     */
-    public boolean getReady() {
-        return this.result.isDone();
     }
 
     /**
@@ -66,12 +54,22 @@ public class Result implements Serializable {
         if (this.result.isDone()) {
             final List<Friend> friends = this.result.get();
 
+            this.log.debug("result: {}", this.result.get());
+
             Collections.sort(friends, Collections.reverseOrder());
 
             return friends;
         }
+        // else
 
         return Collections.emptyList();
+    }
+
+    /**
+     * @return
+     */
+    public boolean getReady() {
+        return this.result.isDone();
     }
 
     /**

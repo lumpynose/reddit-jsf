@@ -14,8 +14,14 @@
     <title>Reddit</title>
 </h:head>
 <h:body>
-    <p><h:link value="friends" outcome="/friends.xhtml" /></p>
-    
-    <p><h:link value="select or add user" outcome="/selectuser.xhtml" /></p>
+    <p>
+        <h:form>
+            <h:commandLink value="friends" action="#{friends.submit}" />
+        </h:form>
+    </p>
+
+    <p>
+        <h:link value="select or add user" outcome="/selectuser.xhtml" />
+    </p>
 </h:body>
 </html>

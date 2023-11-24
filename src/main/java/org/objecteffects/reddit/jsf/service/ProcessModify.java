@@ -3,7 +3,6 @@ package org.objecteffects.reddit.jsf.service;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -66,7 +65,7 @@ public class ProcessModify {
             result = this.executorService.submit(new JobTask(user));
         }
         catch (final RejectedExecutionException ree) {
-            return new CompletableFuture<>();
+            return null; // new CompletableFuture<>();
         }
 
         return result;
@@ -87,7 +86,7 @@ public class ProcessModify {
         catch (final RejectedExecutionException ree) {
             log.error("RejectedExecutionException: {}", ree);
 
-            return new CompletableFuture<>();
+            return null; // new CompletableFuture<>();
         }
 
         return result;

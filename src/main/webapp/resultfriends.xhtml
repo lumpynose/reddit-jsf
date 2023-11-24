@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="jakarta.faces.facelets" xmlns:f="jakarta.faces.core"
+    xmlns:c="jakarta.tags.core" xmlns:h="jakarta.faces.html"
+    xmlns:fn="jakarta.tags.functions" xmlns:o="https://omnifaces.org/ui"
+    xmlns:of="https://omnifaces.org/functions"
+    xmlns:p="https://primefaces.org/ui"
+    xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <c:if test="#{not resultFriends.ready}">
+        <meta http-equiv="refresh" content="5" />
+    </c:if>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h:outputStylesheet name="css/stylesheet.css" />
+    <title>Reddit friends</title>
+</h:head>
+
+<h:body>
+    <div>
+        <header>
+            <h2>Reddit friends</h2>
+        </header>
+
+        <main>
+            <c:choose>
+                <c:when test="#{not resultFriends.ready}">
+                    <p>
+                        <h:outputText
+                            value="Fetching: #{resultFriends.counter}" />
+                    </p>
+                </c:when>
+
+                <c:otherwise>
+                    <p>
+                        <h:outputText
+                            value="friends: #{fn:length(resultFriends.result)} friends" />
+                    </p>
+
+                    <ul>
+                        <ui:repeat value="#{resultFriends.result}" var="friend">
+                            <li><h:outputLink
+                                    value="http://www.reddit.com/user/#{friend.name}">
+                                    <h:outputText value="#{friend.name}" />
+                                </h:outputLink> <h:outputText value=", #{friend.karma}" />
+                                <h:outputText
+                                    value=", #{friend.isBlocked}" /> <h:outputText
+                                    value=", #{friend.isSuspended}" /></li>
+                        </ui:repeat>
+                    </ul>
+                </c:otherwise>
+            </c:choose>
+
+            <p>
+                <h:form>
+                    <h:commandButton value="Cancel"
+                        action="resultFriends.cancel()" />
+                </h:form>
+            </p>
+        </main>
+    </div>
+</h:body>
+
+</html>
