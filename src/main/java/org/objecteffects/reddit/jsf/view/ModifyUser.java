@@ -59,9 +59,9 @@ public class ModifyUser implements Serializable {
     /**
      * @return
      */
-    public Future<String> getResult() {
-        return this.result;
-    }
+//    public Future<String> getResult() {
+//        return this.result;
+//    }
 
     /**
      * @return
@@ -83,15 +83,17 @@ public class ModifyUser implements Serializable {
      * @return
      */
     public String submit() {
-        this.log.debug("submit, data: {}", this.item);
+        this.log.debug("submit, user: {}, data: {}", this.user, this.item);
 
         if (this.item.size() > 0) {
-            this.log.debug("processing: {}", this.item.get(0));
+            this.log.debug("processing: {}, {}",
+                    this.user, this.item.get(0));
 
-            this.result = this.processModify.process(this.item.get(0));
+            this.result =
+                    this.processModify.process(this.user, this.item.get(0));
 
-            FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                    .put("result", this.result);
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .getFlash().put("result", this.result);
 
             return "result.xhtml?faces-redirect=true";
         }

@@ -16,12 +16,13 @@ import org.slf4j.LoggerFactory;
 
 import com.objecteffects.reddit.data.Friend;
 import com.objecteffects.reddit.method.GetFriends;
+import com.objecteffects.reddit.method.UpVotePosts;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-import jakarta.enterprise.concurrent.ManagedExecutorService;
 import jakarta.enterprise.concurrent.ManagedThreadFactory;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  *
@@ -33,17 +34,16 @@ public class ProcessModify implements Serializable {
     private final static Logger log =
             LoggerFactory.getLogger(ProcessModify.class.getSimpleName());
 
-    @Resource
-    private ManagedExecutorService executorService;
+    @Inject
+    UpVotePosts upVotePosts;
 
     @Resource
     private ManagedThreadFactory threadFactory;
 
-//    @Inject
-//    private static FriendsService friendsService;
-
     private ExecutorService tpe = null;
 
+    /**
+     */
     @PostConstruct
     public void init() {
         this.tpe = new ThreadPoolExecutor(1, 1, 1, TimeUnit.HOURS,
@@ -56,18 +56,59 @@ public class ProcessModify implements Serializable {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    public Future<String> process(final String user) {
+    public Future<String> process(final String user, final String modify) {
         Future<String> result;
 
         try {
-            log.info("running {}", user);
-            result = this.tpe.submit(new JobTask(user));
+            log.info("running {}, {}", user, modify);
+
+            final JobTask jobTask = new JobTask(user, modify);
+            jobTask.setUpVotePosts(this.upVotePosts);
+            result = this.tpe.submit(jobTask);
         }
         catch (final RejectedExecutionException ree) {
             return null; // new CompletableFuture<>();
         }
 
         return result;
+    }
+
+    static class JobTask implements Callable<String> {
+        private final String user, modify;
+        private UpVotePosts upVotePosts;
+
+        public JobTask(final String _user, final String _modify) {
+            this.user = _user;
+            this.modify = _modify;
+        }
+
+        public void setUpVotePosts(final UpVotePosts upv) {
+            log.debug("upv: {}", upv);
+
+            this.upVotePosts = upv;
+        }
+
+        @Override
+        public String call() throws Exception {
+            try {
+                log.debug("started {}, {}", this.user, this.modify);
+//                Thread.sleep(this.JOB_EXECUTION_TIME);
+
+                switch (this.modify) {
+                case "upvote":
+                    this.upVotePosts.upVotePosts(this.user, 1, null);
+                default:
+                    break;
+                }
+
+                log.debug("finished {}, {}", this.user, this.modify);
+            }
+            catch (final InterruptedException ex) {
+                log.error("InterruptedException: {}", ex);
+            }
+
+            return "finished";
+        }
     }
 
     /**
@@ -97,29 +138,6 @@ public class ProcessModify implements Serializable {
             log.info("starting getFriends");
 
             return new GetFriends().getFriends(5, true);
-        }
-    }
-
-    static class JobTask implements Callable<String> {
-        private final int JOB_EXECUTION_TIME = 10000;
-        private final String user;
-
-        public JobTask(final String _user) {
-            this.user = _user;
-        }
-
-        @Override
-        public String call() throws Exception {
-            try {
-                log.debug("started {}", this.user);
-                Thread.sleep(this.JOB_EXECUTION_TIME);
-                log.debug("finished {}", this.user);
-            }
-            catch (final InterruptedException ex) {
-                log.error("InterruptedException: {}", ex);
-            }
-
-            return "finished";
         }
     }
 }
