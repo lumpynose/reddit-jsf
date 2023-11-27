@@ -1,5 +1,6 @@
 package org.objecteffects.reddit.jsf.service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
@@ -26,19 +27,17 @@ import jakarta.enterprise.context.ApplicationScoped;
  *
  */
 @ApplicationScoped
-public class ProcessModify {
-//    @Inject
-//    @SuppressWarnings("unused")
-//    private transient Logger log;
+public class ProcessModify implements Serializable {
+    private static final long serialVersionUID = 8210622038575525242L;
 
     private final static Logger log =
             LoggerFactory.getLogger(ProcessModify.class.getSimpleName());
 
     @Resource
-    ManagedExecutorService executorService;
+    private ManagedExecutorService executorService;
 
     @Resource
-    ManagedThreadFactory threadFactory;
+    private ManagedThreadFactory threadFactory;
 
 //    @Inject
 //    private static FriendsService friendsService;
@@ -62,7 +61,7 @@ public class ProcessModify {
 
         try {
             log.info("running {}", user);
-            result = this.executorService.submit(new JobTask(user));
+            result = this.tpe.submit(new JobTask(user));
         }
         catch (final RejectedExecutionException ree) {
             return null; // new CompletableFuture<>();
@@ -75,7 +74,7 @@ public class ProcessModify {
      * @param user
      * @return
      */
-    public Future<List<Friend>> processMTF(final String user) {
+    public Future<List<Friend>> processFriends(final String user) {
         Future<List<Friend>> result;
 
         try {
@@ -102,7 +101,7 @@ public class ProcessModify {
     }
 
     static class JobTask implements Callable<String> {
-        private final int JOB_EXECUTION_TIME = 15000;
+        private final int JOB_EXECUTION_TIME = 10000;
         private final String user;
 
         public JobTask(final String _user) {

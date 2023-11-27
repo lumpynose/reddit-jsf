@@ -17,9 +17,8 @@ import com.objecteffects.reddit.method.GetFriends;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-import jakarta.enterprise.concurrent.ManagedExecutorService;
 import jakarta.enterprise.concurrent.ManagedThreadFactory;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -27,7 +26,7 @@ import jakarta.inject.Named;
 /**
  */
 @Named
-@RequestScoped
+@ApplicationScoped
 public class Friends implements Serializable {
     private static final long serialVersionUID = -570500230181100578L;
 
@@ -35,13 +34,10 @@ public class Friends implements Serializable {
             LoggerFactory.getLogger(Friends.class.getSimpleName());
 
     @Resource
-    private ManagedExecutorService executorService;
-
-    @Resource
     private ManagedThreadFactory threadFactory;
 
     @Inject
-    GetFriends getFriends;
+    private GetFriends getFriends;
 
     private Future<List<Friend>> result;
 
@@ -53,11 +49,18 @@ public class Friends implements Serializable {
     }
 
     static class JobFriends implements Callable<List<Friend>> {
+        private GetFriends getFriends;
+
         @Override
         public List<Friend> call() throws Exception {
             log.info("starting getFriends");
 
-            return new GetFriends().getFriends(5, true);
+//            return new GetFriends().getFriends(5, true);
+            return this.getFriends.getFriends(5, true);
+        }
+
+        public void setGetFriends(final GetFriends _getFriends) {
+            this.getFriends = _getFriends;
         }
     }
 
@@ -71,7 +74,10 @@ public class Friends implements Serializable {
                 new ThreadPoolExecutor(1, 1, 1, TimeUnit.HOURS,
                         new ArrayBlockingQueue<>(1), this.threadFactory);
 
-        this.result = tpe.submit(new JobFriends());
+        final JobFriends jf = new JobFriends();
+        jf.setGetFriends(this.getFriends);
+
+        this.result = tpe.submit(jf);
 
         FacesContext.getCurrentInstance().getExternalContext().getFlash()
                 .put("result", this.result);

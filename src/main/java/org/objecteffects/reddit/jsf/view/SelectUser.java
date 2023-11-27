@@ -29,14 +29,7 @@ public class SelectUser implements Serializable {
     @Inject
     private UserService userService;
 
-    private String selectUser = null;
-    private String addUser = null;
     private String user = null;
-
-//    @PostConstruct
-//    public void init() {
-//        this.log.debug("init");
-//    }
 
     /**
      * @return List of User
@@ -74,16 +67,16 @@ public class SelectUser implements Serializable {
     /**
      * @param _user
      */
-    public void setSelectUser(final String _user) {
-        this.log.debug("selectUser: {}", _user);
+    public void setUser(final String _user) {
+        this.log.debug("selected user: {}", _user);
 
         if (_user == null || _user.isEmpty()) {
             return;
         }
 
-        this.selectUser = _user;
+        this.user = _user;
 
-        final String msg = this.selectUser + " selected.";
+        final String msg = this.user + " selected.";
 
         final FacesMessage facesMsg =
                 new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
@@ -94,25 +87,27 @@ public class SelectUser implements Serializable {
     /**
      * @return selectUser
      */
-    public String getSelectUser() {
-        return this.selectUser;
+    public String getUser() {
+        return this.user;
     }
 
     /**
      * @param _user
      */
     public void setaddUser(final String _user) {
-        this.log.debug("addUser: {}", _user);
+        if (_user == null || _user.isEmpty()) {
+            this.log.debug("addUser: not adding");
 
-        if (this.selectUser != null && !this.selectUser.isEmpty()) {
             return;
         }
 
-        this.addUser = _user;
+        this.log.debug("addUser: {}", _user);
 
-        this.userService.mergeUser(new RedditUser(this.addUser));
+        this.user = _user;
 
-        final String msg = this.addUser + " added.";
+        this.userService.mergeUser(new RedditUser(this.user));
+
+        final String msg = this.user + " added.";
 
         final FacesMessage facesMsg =
                 new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
@@ -124,31 +119,19 @@ public class SelectUser implements Serializable {
      * @return addUser
      */
     public String getaddUser() {
-        return this.addUser;
-    }
-
-    public String getUser() {
         return this.user;
     }
 
     /**
      * @return nothing
      */
-    public String result() {
-        if (this.selectUser != null) {
-            this.user = this.selectUser;
-        }
+    public String submit() {
 
-        if (this.addUser != null) {
-            this.user = this.addUser;
-        }
-
-        this.log.debug("user: {}", this.user);
-
-        this.selectUser = null;
-        this.addUser = null;
+        this.log.debug("submit, user: {}", this.user);
 
         if (this.user == null) {
+            this.log.debug("submit: null user");
+
             return "";
         }
 

@@ -30,6 +30,7 @@ public class ResultFriends implements Serializable {
 
 //    @Inject
 //    @ManagedProperty("#{flash.result}")
+//    private final Future<List<Friend>> result;
     @SuppressWarnings("unchecked")
     private final Future<List<Friend>> result =
             (Future<List<Friend>>) FacesContext.getCurrentInstance()
@@ -89,7 +90,7 @@ public class ResultFriends implements Serializable {
     }
 
     /**
-     * @param counter the counter to set
+     * @param _counter the counter to set
      */
     public void setCounter(final Integer _counter) {
         this.counter = _counter;

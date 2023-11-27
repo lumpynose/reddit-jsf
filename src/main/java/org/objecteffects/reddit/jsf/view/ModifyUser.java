@@ -8,8 +8,6 @@ import java.util.concurrent.Future;
 import org.objecteffects.reddit.jsf.service.ProcessModify;
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.data.Friend;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
@@ -36,7 +34,7 @@ public class ModifyUser implements Serializable {
             .getExternalContext().getFlash().get("user");
 
     private List<String> item;
-    private Future<List<Friend>> result;
+    private Future<String> result;
 
     /**
      */
@@ -61,7 +59,7 @@ public class ModifyUser implements Serializable {
     /**
      * @return
      */
-    public Future<List<Friend>> getResult() {
+    public Future<String> getResult() {
         return this.result;
     }
 
@@ -90,8 +88,7 @@ public class ModifyUser implements Serializable {
         if (this.item.size() > 0) {
             this.log.debug("processing: {}", this.item.get(0));
 
-//            this.result = this.processModify.process(this.item.get(0));
-            this.result = this.processModify.processMTF(this.item.get(0));
+            this.result = this.processModify.process(this.item.get(0));
 
             FacesContext.getCurrentInstance().getExternalContext().getFlash()
                     .put("result", this.result);

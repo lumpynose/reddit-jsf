@@ -30,11 +30,11 @@
                     </p>
 
                     <p class="selectUser">
-                        <h:outputLabel for="selectUser"
+                        <h:outputLabel for="user"
                             value="Select user:" />
                         <br />
-                        <h:selectOneMenu id="selectUser"
-                            value="#{selectUser.selectUser}"
+                        <h:selectOneMenu id="user"
+                            value="#{selectUser.user}"
                             editable="true">
                             <f:selectItem itemLabel="Select One"
                                 itemValue="" />
@@ -44,7 +44,7 @@
                     </p>
                     
                     <p class="messages">
-                        <h:message for="selectUser" />
+                        <h:message for="user" />
                     </p>
 
                     <p class="addUser">
@@ -59,7 +59,7 @@
                     
                     <p>
                         <h:commandButton value="Submit"
-                            action="#{selectUser.result}" />
+                            action="#{selectUser.submit}" />
                     </p>
                     
                     <p class="messages">

@@ -1,17 +1,13 @@
 package org.objecteffects.reddit.jsf.view;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.data.Friend;
-
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -19,34 +15,30 @@ import jakarta.inject.Named;
 /**
  */
 @Named
-@SessionScoped
+@ApplicationScoped
 public class Result implements Serializable {
     private static final long serialVersionUID = -4950508763640509054L;
 
     @Inject
     private transient Logger log;
 
+    @SuppressWarnings("boxing")
     private Integer counter = 0;
 
 //    @Inject
 //    @ManagedProperty("#{flash.result}")
-    private final Future<List<Friend>> result =
-            (Future<List<Friend>>) FacesContext.getCurrentInstance()
+    @SuppressWarnings("unchecked")
+    private final Future<String> result =
+            (Future<String>) FacesContext.getCurrentInstance()
                     .getExternalContext()
                     .getFlash()
                     .get("result");
 
     /**
      */
-    @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
         this.log.debug("init");
-
-//        this.result = (Future<List<Friend>>) FacesContext.getCurrentInstance()
-//                .getExternalContext()
-//                .getFlash()
-//                .get("result");
     }
 
     /**
@@ -61,17 +53,13 @@ public class Result implements Serializable {
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public List<Friend> getResult()
+    public String getResult()
             throws InterruptedException, ExecutionException {
         if (this.result.isDone()) {
-            final List<Friend> friends = this.result.get();
-
-            Collections.sort(friends, Collections.reverseOrder());
-
-            return friends;
+            return this.result.get();
         }
 
-        return Collections.emptyList();
+        return "";
     }
 
     /**

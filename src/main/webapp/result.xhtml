@@ -13,12 +13,12 @@
     <c:if test="#{not result.ready}">
         <meta http-equiv="refresh" content="5" />
     </c:if>
-    <title>Friends</title>
+    <title>Results</title>
 </h:head>
 
 <h:body>
     <header>
-        <h2>Friends</h2>
+        <h2>Results</h2>
     </header>
 
     <main>
@@ -32,19 +32,8 @@
             <c:otherwise>
                 <p>
                     <h:outputText
-                        value="Result: #{fn:length(result.result)} friends" />
+                        value="Result: #{result.result}" />
                 </p>
-                <ul>
-                    <ui:repeat value="#{result.result}" var="friend">
-                        <li><h:outputLink
-                                value="http://www.reddit.com/user/#{friend.name}">
-                                <h:outputText value="#{friend.name}" />
-                            </h:outputLink> <h:outputText value=", #{friend.karma}" />
-                            <h:outputText value=", #{friend.isBlocked}" />
-                            <h:outputText
-                                value=", #{friend.isSuspended}" /></li>
-                    </ui:repeat>
-                </ul>
             </c:otherwise>
         </c:choose>
         <p>
