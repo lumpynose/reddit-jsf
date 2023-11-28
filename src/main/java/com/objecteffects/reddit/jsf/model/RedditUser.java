@@ -1,4 +1,4 @@
-package org.objecteffects.reddit.jsf.model;
+package com.objecteffects.reddit.jsf.model;
 
 import java.io.Serializable;
 import java.util.Objects;
