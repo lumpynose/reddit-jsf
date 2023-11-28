@@ -5,8 +5,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.objecteffects.reddit.jsf.service.ProcessModify;
 import org.slf4j.Logger;
+
+import com.objecteffects.reddit.jsf.service.ProcessModify;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;

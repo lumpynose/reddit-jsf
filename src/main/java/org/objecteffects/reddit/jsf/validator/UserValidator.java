@@ -2,7 +2,7 @@ package org.objecteffects.reddit.jsf.validator;
 
 import java.io.Serializable;
 
-import org.objecteffects.reddit.jsf.service.UserService;
+import com.objecteffects.reddit.jsf.service.UserService;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;

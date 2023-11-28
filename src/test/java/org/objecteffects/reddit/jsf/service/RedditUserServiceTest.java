@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 
 import com.objecteffects.reddit.jsf.logging.LoggerProducer;
 import com.objecteffects.reddit.jsf.model.RedditUser;
+import com.objecteffects.reddit.jsf.service.UserService;
 
 import jakarta.inject.Inject;
 

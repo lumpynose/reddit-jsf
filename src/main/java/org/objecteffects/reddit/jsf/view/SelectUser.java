@@ -5,10 +5,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.objecteffects.reddit.jsf.service.UserService;
 import org.slf4j.Logger;
 
 import com.objecteffects.reddit.jsf.model.RedditUser;
+import com.objecteffects.reddit.jsf.service.UserService;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
