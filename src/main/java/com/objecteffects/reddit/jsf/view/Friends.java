@@ -1,4 +1,4 @@
-package org.objecteffects.reddit.jsf.view;
+package com.objecteffects.reddit.jsf.view;
 
 import java.io.Serializable;
 import java.util.List;
