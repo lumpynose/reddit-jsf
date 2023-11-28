@@ -25,7 +25,7 @@
         <c:choose>
             <c:when test="#{not result.ready}">
                 <p>
-                    <h:outputText value="Fetching: #{result.counter}" />
+                    <h:outputText value="Waiting ... #{result.counter}" />
                 </p>
             </c:when>
 

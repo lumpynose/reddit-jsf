@@ -16,13 +16,20 @@ import jakarta.inject.Inject;
  */
 @ApplicationScoped
 public class GetMethodProducer implements Serializable {
-    private static final long serialVersionUID = 4313581015685920911L;
+    private static final long serialVersionUID = -1L;
 
     @Inject
     private transient Logger log;
 
     @Inject
     private RedditHttpClient redditHttpClient;
+
+    /**
+     * @param redditHttpClient the redditHttpClient to set
+     */
+    public void setRedditHttpClient(final RedditHttpClient redditHttpClient) {
+        this.redditHttpClient = redditHttpClient;
+    }
 
     /**
      * @return

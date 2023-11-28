@@ -97,6 +97,8 @@ public class ProcessModify implements Serializable {
                 switch (this.modify) {
                 case "upvote":
                     this.upVotePosts.upVotePosts(this.user, 1, null);
+                    break;
+
                 default:
                     break;
                 }

@@ -9,7 +9,7 @@ import org.objecteffects.reddit.jsf.service.ProcessModify;
 import org.slf4j.Logger;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -18,7 +18,7 @@ import jakarta.inject.Named;
  *
  */
 @Named
-@SessionScoped
+@ApplicationScoped
 public class ModifyUser implements Serializable {
     private static final long serialVersionUID = 4123414509789483173L;
 

@@ -17,7 +17,7 @@ import jakarta.inject.Inject;
  */
 @ApplicationScoped
 public class UpVotePostsProducer implements Serializable {
-    private static final long serialVersionUID = 4313581015685920911L;
+    private static final long serialVersionUID = -1L;
 
     @Inject
     private transient Logger log;

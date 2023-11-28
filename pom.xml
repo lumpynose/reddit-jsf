@@ -11,9 +11,7 @@
 
     <name>reddit-jsf</name>
 
-    <description>
-        Reddit with jsf.
-    </description>
+    <description>Reddit with jsf.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,9 +19,9 @@
         <maven.compiler.release>17</maven.compiler.release>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <jakartaee-api.version>10.0.0</jakartaee-api.version>
         <compiler-plugin.version>3.11.0</compiler-plugin.version>
         <war-plugin.version>3.4.0</war-plugin.version>
+        <jakartaee-api.version>10.0.0</jakartaee-api.version>
     </properties>
 
     <build>
