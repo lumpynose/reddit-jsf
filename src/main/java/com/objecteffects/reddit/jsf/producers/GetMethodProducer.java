@@ -24,12 +24,12 @@ public class GetMethodProducer implements Serializable {
     @Inject
     private RedditHttpClient redditHttpClient;
 
-    /**
-     * @param redditHttpClient the redditHttpClient to set
-     */
-    public void setRedditHttpClient(final RedditHttpClient redditHttpClient) {
-        this.redditHttpClient = redditHttpClient;
-    }
+//    /**
+//     * @param _redditHttpClient the redditHttpClient to set
+//     */
+//    public void setRedditHttpClient(final RedditHttpClient _redditHttpClient) {
+//        this.redditHttpClient = _redditHttpClient;
+//    }
 
     /**
      * @return

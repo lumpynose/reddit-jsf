@@ -56,8 +56,8 @@ public class SelectUser implements Serializable {
 
         final List<String> userNames = new ArrayList<>();
 
-        for (final RedditUser user : users) {
-            userNames.add(user.getName());
+        for (final RedditUser user1 : users) {
+            userNames.add(user1.getName());
         }
 
         this.log.debug("userNames: {}", userNames);

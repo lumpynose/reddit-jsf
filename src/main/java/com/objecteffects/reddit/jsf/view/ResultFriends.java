@@ -26,6 +26,7 @@ public class ResultFriends implements Serializable {
     @Inject
     private transient Logger log;
 
+    @SuppressWarnings("boxing")
     private Integer counter = 0;
 
 //    @Inject
