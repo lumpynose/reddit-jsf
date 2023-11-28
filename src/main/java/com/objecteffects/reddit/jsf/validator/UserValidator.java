@@ -1,4 +1,4 @@
-package org.objecteffects.reddit.jsf.validator;
+package com.objecteffects.reddit.jsf.validator;
 
 import java.io.Serializable;
 
