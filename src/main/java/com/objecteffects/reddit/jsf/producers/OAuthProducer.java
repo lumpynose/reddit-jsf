@@ -1,4 +1,4 @@
-package org.objecteffects.reddit.jsf.producers;
+package com.objecteffects.reddit.jsf.producers;
 
 import java.io.IOException;
 import java.io.Serializable;
