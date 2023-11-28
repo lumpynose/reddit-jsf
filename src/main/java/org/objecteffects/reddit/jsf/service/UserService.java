@@ -3,8 +3,9 @@ package org.objecteffects.reddit.jsf.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.objecteffects.reddit.jsf.model.RedditUser;
 import org.slf4j.Logger;
+
+import com.objecteffects.reddit.jsf.model.RedditUser;
 
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
