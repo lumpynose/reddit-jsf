@@ -1,4 +1,4 @@
-package org.objecteffects.reddit.jsf.logging;
+package com.objecteffects.reddit.jsf.logging;
 
 import java.io.Serializable;
 

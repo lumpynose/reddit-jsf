@@ -6,9 +6,10 @@ import org.jboss.weld.junit5.EnableWeld;
 import org.jboss.weld.junit5.WeldInitiator;
 import org.jboss.weld.junit5.WeldSetup;
 import org.junit.jupiter.api.Test;
-import org.objecteffects.reddit.jsf.logging.LoggerProducer;
 import org.objecteffects.reddit.jsf.model.RedditUser;
 import org.slf4j.Logger;
+
+import com.objecteffects.reddit.jsf.logging.LoggerProducer;
 
 import jakarta.inject.Inject;
 
