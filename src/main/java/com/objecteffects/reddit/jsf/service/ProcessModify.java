@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.objecteffects.reddit.data.Friend;
 import com.objecteffects.reddit.method.GetFriends;
+import com.objecteffects.reddit.method.HidePosts;
 import com.objecteffects.reddit.method.UpVotePosts;
 
 import jakarta.annotation.PostConstruct;
@@ -37,6 +38,9 @@ public class ProcessModify implements Serializable {
     @Inject
     UpVotePosts upVotePosts;
 
+    @Inject
+    HidePosts hidePosts;
+
     @Resource
     private ManagedThreadFactory threadFactory;
 
@@ -52,18 +56,24 @@ public class ProcessModify implements Serializable {
 
     /**
      * @param user
+     * @param modify
+     * @param count
      * @return
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    public Future<String> process(final String user, final String modify) {
+    public Future<String> process(final String user, final Integer count,
+            final String modify) {
         Future<String> result;
 
         try {
-            log.info("running {}, {}", user, modify);
+            log.info("running {}, {}, {}", user, count, modify);
 
-            final JobTask jobTask = new JobTask(user, modify);
+            final JobTask jobTask = new JobTask(user, count, modify);
+
             jobTask.setUpVotePosts(this.upVotePosts);
+            jobTask.setHidePosts(this.hidePosts);
+
             result = this.tpe.submit(jobTask);
         }
         catch (final RejectedExecutionException ree) {
@@ -75,10 +85,14 @@ public class ProcessModify implements Serializable {
 
     static class JobTask implements Callable<String> {
         private final String user, modify;
+        private final Integer count;
         private UpVotePosts upVotePosts;
+        private HidePosts hidePosts;
 
-        public JobTask(final String _user, final String _modify) {
+        public JobTask(final String _user, final Integer _count,
+                final String _modify) {
             this.user = _user;
+            this.count = _count;
             this.modify = _modify;
         }
 
@@ -88,15 +102,26 @@ public class ProcessModify implements Serializable {
             this.upVotePosts = upv;
         }
 
+        public void setHidePosts(final HidePosts hp) {
+            log.debug("hp: {}", hp);
+
+            this.hidePosts = hp;
+        }
+
         @Override
         public String call() throws Exception {
             try {
                 log.debug("started {}, {}", this.user, this.modify);
-//                Thread.sleep(this.JOB_EXECUTION_TIME);
 
                 switch (this.modify) {
                 case "upvote":
-                    this.upVotePosts.upVotePosts(this.user, 1, null);
+                    this.upVotePosts.upVotePosts(this.user, this.count,
+                            null);
+                    break;
+
+                case "hide":
+                    this.hidePosts.hidePosts(this.user, this.count,
+                            null);
                     break;
 
                 default:

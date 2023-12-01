@@ -5,8 +5,8 @@ import java.io.Serializable;
 import org.slf4j.Logger;
 
 import com.objecteffects.reddit.core.RedditGetMethod;
-import com.objecteffects.reddit.method.GetFriends;
-import com.objecteffects.reddit.method.UnFriend;
+import com.objecteffects.reddit.core.RedditPostMethod;
+import com.objecteffects.reddit.method.HidePosts;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -16,17 +16,17 @@ import jakarta.inject.Inject;
 /**
  */
 @ApplicationScoped
-public class GetFriendsProducer implements Serializable {
+public class HidePostsProducer implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @Inject
     private transient Logger log;
 
     @Inject
-    private RedditGetMethod getMethod;
+    private RedditGetMethod rgm;
 
     @Inject
-    private UnFriend unFriend;
+    private RedditPostMethod rpm;
 
     /**
      * @return
@@ -34,14 +34,14 @@ public class GetFriendsProducer implements Serializable {
     @Priority(100)
     @Produces
     @ApplicationScoped
-    public GetFriends getFriends() {
-        this.log.debug("getFriends");
+    public HidePosts getHidePosts() {
+        this.log.debug("getHidePosts");
 
-        final GetFriends gf = new GetFriends();
+        final HidePosts hp = new HidePosts();
 
-        gf.setGetMethod(this.getMethod);
-        gf.setUnFriend(this.unFriend);
+        hp.setGetClient(this.rgm);
+        hp.setPostClient(this.rpm);
 
-        return gf;
+        return hp;
     }
 }

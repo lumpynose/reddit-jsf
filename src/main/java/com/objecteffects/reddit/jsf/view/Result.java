@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -15,7 +15,7 @@ import jakarta.inject.Named;
 /**
  */
 @Named
-@ApplicationScoped
+@SessionScoped
 public class Result implements Serializable {
     private static final long serialVersionUID = -4950508763640509054L;
 

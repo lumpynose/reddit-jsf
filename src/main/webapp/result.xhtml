@@ -31,16 +31,29 @@
 
             <c:otherwise>
                 <p>
-                    <h:outputText
-                        value="Result: #{result.result}" />
+                    <h:outputText value="Result: #{result.result}" />
                 </p>
             </c:otherwise>
         </c:choose>
+
         <p>
             <h:form>
                 <h:commandButton value="Cancel" action="result.cancel()" />
             </h:form>
         </p>
+
+
+        <footer>
+            <p>
+                <h:link value="start over" outcome="/index.xhtml" />
+            </p>
+
+            <p>
+                <h:link value="select or add user"
+                    outcome="/selectuser.xhtml" />
+            </p>
+        </footer>
+
     </main>
 </h:body>
 

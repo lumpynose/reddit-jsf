@@ -28,12 +28,25 @@
 
         <div>
             <h:form>
-                <p>
+                <p class="modifyUser">
                     <h:selectManyCheckbox value="#{modifyUser.item}">
                         <f:selectItem itemValue="hide" itemLabel="hide" />
                         <f:selectItem itemValue="upvote"
                             itemLabel="upvote" />
                     </h:selectManyCheckbox>
+                </p>
+
+                <p class="modifyUser">
+                    <h:outputLabel for="count" value="How many:" />
+                    <br />
+                    <h:inputText id="count" title="How many"
+                        value="#{modifyUser.count}"
+                        converterMessage="Please enter digits only."
+                        validatorMessage="Positive non-zero numbers only.">
+                        <f:validateLongRange minimum="1" />
+                    </h:inputText>
+                    <br />
+                    <h:message for="count" />
                 </p>
 
                 <p>
