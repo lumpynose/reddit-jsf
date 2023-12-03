@@ -22,7 +22,7 @@ import jakarta.inject.Named;
 @Named
 @ConversationScoped
 public class ModifyUser implements Serializable {
-    private static final long serialVersionUID = 4123414509789483173L;
+    private static final long serialVersionUID = -1L;
 
     @Inject
     private transient Logger log;
@@ -136,9 +136,8 @@ public class ModifyUser implements Serializable {
                 this.conversation.end();
             }
 
-            this.result =
-                    this.processModify.process(this.user, this.count,
-                            this.item.get(0));
+            this.result = this.processModify.process(this.user, this.count,
+                    this.item.get(0));
 
             FacesContext.getCurrentInstance().getExternalContext()
                     .getFlash().put("result", this.result);

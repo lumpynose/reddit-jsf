@@ -23,7 +23,7 @@ import jakarta.inject.Named;
 @Named
 @RequestScoped
 public class SelectUser implements Serializable {
-    private static final long serialVersionUID = -570500230181100578L;
+    private static final long serialVersionUID = 1L;
 
     @Inject
     private transient Logger log;

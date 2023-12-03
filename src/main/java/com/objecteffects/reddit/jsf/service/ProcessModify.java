@@ -26,11 +26,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
- *
  */
 @ApplicationScoped
 public class ProcessModify implements Serializable {
-    private static final long serialVersionUID = 8210622038575525242L;
+    private static final long serialVersionUID = 1L;
 
     private final static Logger log =
             LoggerFactory.getLogger(ProcessModify.class.getSimpleName());
@@ -50,6 +49,8 @@ public class ProcessModify implements Serializable {
      */
     @PostConstruct
     public void init() {
+        log.debug("init");
+
         this.tpe = new ThreadPoolExecutor(1, 1, 1, TimeUnit.HOURS,
                 new ArrayBlockingQueue<>(1), this.threadFactory);
     }
@@ -120,8 +121,7 @@ public class ProcessModify implements Serializable {
                     break;
 
                 case "hide":
-                    this.hidePosts.hidePosts(this.user, this.count,
-                            null);
+                    this.hidePosts.hidePosts(this.user, this.count, null);
                     break;
 
                 default:

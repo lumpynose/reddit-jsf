@@ -29,7 +29,7 @@ public class UpVotePostsProducer implements Serializable {
     private RedditPostMethod rpm;
 
     /**
-     * @return
+     * @return UpVotePosts
      */
     @Priority(100)
     @Produces

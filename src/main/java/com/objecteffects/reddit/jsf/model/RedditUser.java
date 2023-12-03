@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Size;
  */
 @Entity
 public class RedditUser implements Serializable {
-    private static final long serialVersionUID = -8558505138430535057L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -21,7 +21,7 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class ResultFriends implements Serializable {
-    private static final long serialVersionUID = -4950508763640509054L;
+    private static final long serialVersionUID = 1L;
 
     @Inject
     private transient Logger log;

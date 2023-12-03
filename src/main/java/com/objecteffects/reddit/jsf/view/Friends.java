@@ -28,7 +28,7 @@ import jakarta.inject.Named;
 @Named
 @ApplicationScoped
 public class Friends implements Serializable {
-    private static final long serialVersionUID = -570500230181100578L;
+    private static final long serialVersionUID = -1L;
 
     private final static Logger log =
             LoggerFactory.getLogger(Friends.class.getSimpleName());

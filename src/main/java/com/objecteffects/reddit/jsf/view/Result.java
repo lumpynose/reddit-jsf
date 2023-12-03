@@ -17,7 +17,7 @@ import jakarta.inject.Named;
 @Named
 @SessionScoped
 public class Result implements Serializable {
-    private static final long serialVersionUID = -4950508763640509054L;
+    private static final long serialVersionUID = -1L;
 
     @Inject
     private transient Logger log;
@@ -27,18 +27,21 @@ public class Result implements Serializable {
 
 //    @Inject
 //    @ManagedProperty("#{flash.result}")
-    @SuppressWarnings("unchecked")
-    private final Future<String> result =
-            (Future<String>) FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .getFlash()
-                    .get("result");
+    private Future<String> result;
 
     /**
      */
+    @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
         this.log.debug("init");
+
+        this.result = (Future<String>) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getFlash()
+                .get("result");
+
+        this.log.debug("result: {}", this.result);
     }
 
     /**
