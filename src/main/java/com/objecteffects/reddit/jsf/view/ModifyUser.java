@@ -11,7 +11,7 @@ import com.objecteffects.reddit.jsf.service.ProcessModify;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.Conversation;
-import jakarta.enterprise.context.ConversationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -20,7 +20,7 @@ import jakarta.inject.Named;
  *
  */
 @Named
-@ConversationScoped
+@RequestScoped
 public class ModifyUser implements Serializable {
     private static final long serialVersionUID = -1L;
 
@@ -56,9 +56,6 @@ public class ModifyUser implements Serializable {
     public void init() {
         this.log.debug("init user1: {}", this.user);
 
-//        this.user = (String) this.facesContext.getExternalContext()
-//                .getFlash().get("user");
-
         this.user = (String) FacesContext.getCurrentInstance()
                 .getExternalContext().getFlash().get("user");
 
@@ -74,13 +71,6 @@ public class ModifyUser implements Serializable {
 
         return this.user;
     }
-
-    /**
-     * @return
-     */
-//    public Future<String> getResult() {
-//        return this.result;
-//    }
 
     /**
      * @return
@@ -132,12 +122,14 @@ public class ModifyUser implements Serializable {
             this.log.debug("processing: {}, {}",
                     this.user, this.item.get(0));
 
-            if (!this.conversation.isTransient()) {
-                this.conversation.end();
-            }
+//            if (!this.conversation.isTransient()) {
+//                this.conversation.end();
+//            }
 
             this.result = this.processModify.process(this.user, this.count,
                     this.item.get(0));
+
+            this.log.debug("result: {}", this.result);
 
             FacesContext.getCurrentInstance().getExternalContext()
                     .getFlash().put("result", this.result);

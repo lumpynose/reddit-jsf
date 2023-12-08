@@ -40,17 +40,31 @@
                             value="friends: #{fn:length(resultFriends.result)} friends" />
                     </p>
 
-                <ul>
-                    <ui:repeat value="#{resultFriends.result}" var="friend">
-                        <li><h:outputLink
-                                value="http://www.reddit.com/user/#{friend.name}">
-                                <h:outputText value="#{friend.name}" />
-                            </h:outputLink> <h:outputText value=", #{friend.karma}" />
-                            <h:outputText value=", #{friend.isBlocked}" />
-                            <h:outputText
-                                value=", #{friend.isSuspended}" /></li>
-                    </ui:repeat>
-                </ul>
+                    <ul>
+                        <ui:repeat value="#{resultFriends.result}"
+                            var="friend">
+                            <li>
+                                <h:outputLink
+                                    value="http://www.reddit.com/user/#{friend.name}">
+                                    <h:outputText value="#{friend.name}" />
+                                </h:outputLink>
+                                <h:outputText value=", #{friend.karma}" />
+                                <h:outputText
+                                    value=", #{friend.percentage}">
+                                    <f:convertNumber type="percent"
+                                        maxFractionDigits="2" />
+                                </h:outputText>
+                                <h:outputText
+                                    value=", #{friend.latest}" />
+                                <c:if test="#{friend.isBlocked}">
+                                    <h:outputText value=", blocked" />
+                                </c:if>
+                                <c:if test="#{friend.isSuspended}">
+                                    <h:outputText value=", suspended" />
+                                </c:if>
+                            </li>
+                        </ui:repeat>
+                    </ul>
                 </c:otherwise>
             </c:choose>
 

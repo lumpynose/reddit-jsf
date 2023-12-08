@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.core.RedditDeleteMethod;
+import com.objecteffects.reddit.core.RedditDelete;
 import com.objecteffects.reddit.method.UnFriend;
 
 import jakarta.annotation.Priority;
@@ -22,7 +22,7 @@ public class UnFriendProducer implements Serializable {
     private transient Logger log;
 
     @Inject
-    private RedditDeleteMethod deleteMethod;
+    private RedditDelete deleteMethod;
 
     /**
      * @return

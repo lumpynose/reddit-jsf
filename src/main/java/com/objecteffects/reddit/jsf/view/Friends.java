@@ -33,11 +33,13 @@ public class Friends implements Serializable {
     private final static Logger log =
             LoggerFactory.getLogger(Friends.class.getSimpleName());
 
+    @Inject
+    private GetFriends getFriends;
+
     @Resource
     private ManagedThreadFactory threadFactory;
 
-    @Inject
-    private GetFriends getFriends;
+    private ExecutorService tpe;
 
     private Future<List<Friend>> result;
 
@@ -46,6 +48,9 @@ public class Friends implements Serializable {
     @PostConstruct
     public void init() {
         log.debug("init");
+
+        this.tpe = new ThreadPoolExecutor(1, 1, 1, TimeUnit.HOURS,
+                new ArrayBlockingQueue<>(1), this.threadFactory);
     }
 
     static class JobFriends implements Callable<List<Friend>> {
@@ -55,7 +60,6 @@ public class Friends implements Serializable {
         public List<Friend> call() throws Exception {
             log.info("starting getFriends");
 
-//            return new GetFriends().getFriends(5, true);
             return this.getFriends.getFriends(5, true);
         }
 
@@ -70,14 +74,12 @@ public class Friends implements Serializable {
     public String submit() {
         log.debug("submit");
 
-        final ExecutorService tpe =
-                new ThreadPoolExecutor(1, 1, 1, TimeUnit.HOURS,
-                        new ArrayBlockingQueue<>(1), this.threadFactory);
+        log.debug("tpe: {}", this.tpe);
 
         final JobFriends jf = new JobFriends();
         jf.setGetFriends(this.getFriends);
 
-        this.result = tpe.submit(jf);
+        this.result = this.tpe.submit(jf);
 
         FacesContext.getCurrentInstance().getExternalContext().getFlash()
                 .put("result", this.result);

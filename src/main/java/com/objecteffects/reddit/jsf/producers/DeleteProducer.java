@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.core.RedditDeleteMethod;
+import com.objecteffects.reddit.core.RedditDelete;
 import com.objecteffects.reddit.core.RedditHttpClient;
 
 import jakarta.annotation.Priority;
@@ -15,7 +15,7 @@ import jakarta.inject.Inject;
 /**
  */
 @ApplicationScoped
-public class DeleteMethodProducer implements Serializable {
+public class DeleteProducer implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @Inject
@@ -30,10 +30,10 @@ public class DeleteMethodProducer implements Serializable {
     @Priority(100)
     @Produces
     @ApplicationScoped
-    public RedditDeleteMethod getDeleteMethod() {
+    public RedditDelete getDeleteMethod() {
         this.log.debug("getDeleteMethod");
 
-        final RedditDeleteMethod rpm = new RedditDeleteMethod();
+        final RedditDelete rpm = new RedditDelete();
 
         rpm.setRedditHttpClient(this.redditHttpClient);
 

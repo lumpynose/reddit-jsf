@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.core.RedditGetMethod;
-import com.objecteffects.reddit.core.RedditPostMethod;
+import com.objecteffects.reddit.core.RedditPost;
+import com.objecteffects.reddit.method.GetPosts;
 import com.objecteffects.reddit.method.HidePosts;
 
 import jakarta.annotation.Priority;
@@ -23,10 +23,10 @@ public class HidePostsProducer implements Serializable {
     private transient Logger log;
 
     @Inject
-    private RedditGetMethod rgm;
+    private GetPosts rgm;
 
     @Inject
-    private RedditPostMethod rpm;
+    private RedditPost rpm;
 
     /**
      * @return
@@ -39,8 +39,8 @@ public class HidePostsProducer implements Serializable {
 
         final HidePosts hp = new HidePosts();
 
-        hp.setGetClient(this.rgm);
-        hp.setPostClient(this.rpm);
+        hp.setGetPosts(this.rgm);
+        hp.setPost(this.rpm);
 
         return hp;
     }

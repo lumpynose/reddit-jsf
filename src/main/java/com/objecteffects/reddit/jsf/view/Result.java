@@ -7,7 +7,7 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -15,7 +15,7 @@ import jakarta.inject.Named;
 /**
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class Result implements Serializable {
     private static final long serialVersionUID = -1L;
 
@@ -26,29 +26,34 @@ public class Result implements Serializable {
     private Integer counter = 0;
 
 //    @Inject
-//    @ManagedProperty("#{flash.result}")
-    private Future<String> result;
+//    @ManagedProperty("#{flash.future}")
+    private Future<String> future;
 
     /**
      */
-    @SuppressWarnings("unchecked")
     @PostConstruct
     public void init() {
         this.log.debug("init");
 
-        this.result = (Future<String>) FacesContext.getCurrentInstance()
+        this.future = (Future<String>) FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .getFlash()
-                .get("result");
+                .get("future");
 
-        this.log.debug("result: {}", this.result);
+        this.log.debug("future: {}", this.future);
+    }
+
+    /**
+     */
+    public void cancel() {
+        this.future.cancel(true);
     }
 
     /**
      * @return
      */
     public boolean getReady() {
-        return this.result.isDone();
+        return this.future.isDone();
     }
 
     /**
@@ -56,19 +61,12 @@ public class Result implements Serializable {
      * @throws InterruptedException
      * @throws ExecutionException
      */
-    public String getResult()
-            throws InterruptedException, ExecutionException {
-        if (this.result.isDone()) {
-            return this.result.get();
+    public String getFuture() throws InterruptedException, ExecutionException {
+        if (this.future.isDone()) {
+            return this.future.get();
         }
 
         return "";
-    }
-
-    /**
-     */
-    public void cancel() {
-        this.result.cancel(true);
     }
 
     /**

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import com.objecteffects.reddit.jsf.model.RedditUser;
 import com.objecteffects.reddit.jsf.service.UserService;
 
-import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -31,8 +30,8 @@ public class SelectUser implements Serializable {
     @Inject
     private UserService userService;
 
-    @Inject
-    private Conversation conversation;
+//    @Inject
+//    private Conversation conversation;
 
     private String user = null;
 
@@ -142,11 +141,10 @@ public class SelectUser implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getFlash()
                 .put("user", this.user);
 
-        if (this.conversation.isTransient()) {
-            this.conversation.begin();
-        }
+//        if (this.conversation.isTransient()) {
+//            this.conversation.begin();
+//        }
 
         return "/modifyuser.xhtml?faces-redirect=true";
-//        return "/modifyuser.xhtml";
     }
 }

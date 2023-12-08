@@ -11,17 +11,25 @@
     xmlns:pt="https://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h:outputStylesheet name="css/stylesheet.css" />
     <title>Reddit</title>
 </h:head>
 <h:body>
-    <p>
-        <h:form>
-            <h:commandLink value="friends" action="#{friends.submit()}" />
-        </h:form>
-    </p>
+    <div class="indexPart">
+        <p>
+            <h:form>
+                <h:commandLink value="friends"
+                    action="#{friends.submit()}" />
+            </h:form>
+        </p>
+    </div>
 
-    <p>
-        <h:link value="select or add user" outcome="/selectuser.xhtml" />
-    </p>
+    <div class="indexPart">
+        <p>
+            <h:link value="select or add user"
+                outcome="/selectuser.xhtml" />
+        </p>
+    </div>
 </h:body>
 </html>

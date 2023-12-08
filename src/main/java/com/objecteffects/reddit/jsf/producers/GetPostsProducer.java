@@ -5,9 +5,7 @@ import java.io.Serializable;
 import org.slf4j.Logger;
 
 import com.objecteffects.reddit.core.RedditGet;
-import com.objecteffects.reddit.method.GetFriends;
 import com.objecteffects.reddit.method.GetPosts;
-import com.objecteffects.reddit.method.UnFriend;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -17,20 +15,21 @@ import jakarta.inject.Inject;
 /**
  */
 @ApplicationScoped
-public class GetFriendsProducer implements Serializable {
+public class GetPostsProducer implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @Inject
     private transient Logger log;
 
     @Inject
-    private RedditGet getMethod;
+    private RedditGet redditGet;
 
-    @Inject
-    private UnFriend unFriend;
-
-    @Inject
-    private GetPosts getPosts;
+//    /**
+//     * @param _redditHttpClient the redditHttpClient to set
+//     */
+//    public void setRedditHttpClient(final RedditHttpClient _redditHttpClient) {
+//        this.redditHttpClient = _redditHttpClient;
+//    }
 
     /**
      * @return
@@ -38,15 +37,13 @@ public class GetFriendsProducer implements Serializable {
     @Priority(100)
     @Produces
     @ApplicationScoped
-    public GetFriends getFriends() {
-        this.log.debug("getFriends");
+    public GetPosts getGetPosts() {
+        this.log.debug("getGetPosts");
 
-        final GetFriends gf = new GetFriends();
+        final GetPosts rgp = new GetPosts();
 
-        gf.setGetMethod(this.getMethod);
-        gf.setUnFriend(this.unFriend);
-        gf.setGetPosts(this.getPosts);
+        rgp.setGet(this.redditGet);
 
-        return gf;
+        return rgp;
     }
 }

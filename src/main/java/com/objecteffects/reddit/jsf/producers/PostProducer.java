@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.slf4j.Logger;
 
 import com.objecteffects.reddit.core.RedditHttpClient;
-import com.objecteffects.reddit.core.RedditPostMethod;
+import com.objecteffects.reddit.core.RedditPost;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -15,7 +15,7 @@ import jakarta.inject.Inject;
 /**
  */
 @ApplicationScoped
-public class GetPostProducer implements Serializable {
+public class PostProducer implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @Inject
@@ -30,10 +30,10 @@ public class GetPostProducer implements Serializable {
     @Priority(100)
     @Produces
     @ApplicationScoped
-    public RedditPostMethod getPostMethod() {
+    public RedditPost getPostMethod() {
         this.log.debug("getPostMethod");
 
-        final RedditPostMethod rpm = new RedditPostMethod();
+        final RedditPost rpm = new RedditPost();
 
         rpm.setRedditHttpClient(this.redditHttpClient);
 

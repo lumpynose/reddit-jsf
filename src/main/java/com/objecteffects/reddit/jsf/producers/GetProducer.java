@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.core.RedditGetMethod;
+import com.objecteffects.reddit.core.RedditGet;
 import com.objecteffects.reddit.core.RedditHttpClient;
 
 import jakarta.annotation.Priority;
@@ -15,7 +15,7 @@ import jakarta.inject.Inject;
 /**
  */
 @ApplicationScoped
-public class GetMethodProducer implements Serializable {
+public class GetProducer implements Serializable {
     private static final long serialVersionUID = -1L;
 
     @Inject
@@ -37,10 +37,10 @@ public class GetMethodProducer implements Serializable {
     @Priority(100)
     @Produces
     @ApplicationScoped
-    public RedditGetMethod getGetMethod() {
+    public RedditGet getGetMethod() {
         this.log.debug("getGetMethod");
 
-        final RedditGetMethod rgm = new RedditGetMethod();
+        final RedditGet rgm = new RedditGet();
 
         rgm.setRedditHttpClient(this.redditHttpClient);
 
