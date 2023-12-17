@@ -95,6 +95,9 @@ public class ProcessModify implements Serializable {
             this.user = _user;
             this.count = _count;
             this.modify = _modify;
+
+            log.debug("user: {}, count: {}, modify: {}", this.user, this.count,
+                    this.modify);
         }
 
         public void setUpVotePosts(final UpVotePosts upv) {

@@ -7,12 +7,12 @@ import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 
+import com.objecteffects.reddit.jsf.service.FuturesQueue;
 import com.objecteffects.reddit.jsf.service.ProcessModify;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.Conversation;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.context.FacesContext;
+import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.lifecycle.ClientWindowScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
@@ -20,7 +20,7 @@ import jakarta.inject.Named;
  *
  */
 @Named
-@RequestScoped
+@ClientWindowScoped
 public class ModifyUser implements Serializable {
     private static final long serialVersionUID = -1L;
 
@@ -31,7 +31,14 @@ public class ModifyUser implements Serializable {
     private ProcessModify processModify;
 
     @Inject
-    private Conversation conversation;
+    private FuturesQueue futuresQueue;
+
+    @Inject
+    @ManagedProperty(value = "#{param.user}")
+    private String user;
+
+//    @Inject
+//    private Conversation conversation;
 
 //    @Inject
 //    @ManagedProperty("#{flash.user}")
@@ -39,13 +46,11 @@ public class ModifyUser implements Serializable {
 //    @Inject
 //    FacesContext facesContext;
 
-    private String user;
-
 //    private final String user = (String) FacesContext.getCurrentInstance()
 //            .getExternalContext().getFlash().get("user");
 
     private List<String> item;
-    private Future<String> result;
+    private Future<String> future;
 
     @SuppressWarnings("boxing")
     private Integer count = 1;
@@ -54,12 +59,12 @@ public class ModifyUser implements Serializable {
      */
     @PostConstruct
     public void init() {
-        this.log.debug("init user1: {}", this.user);
+        this.log.debug("init user: {}", this.user);
 
-        this.user = (String) FacesContext.getCurrentInstance()
-                .getExternalContext().getFlash().get("user");
-
-        this.log.debug("init user2: {}", this.user);
+//        this.user = (String) FacesContext.getCurrentInstance()
+//                .getExternalContext().getFlash().get("user");
+//
+//        this.log.debug("init user2: {}", this.user);
     }
 
     /**
@@ -70,6 +75,12 @@ public class ModifyUser implements Serializable {
         this.log.debug("getUser: {}", this.user);
 
         return this.user;
+    }
+
+    public void setUser(final String _user) {
+        this.log.debug("setUser: {}", _user);
+
+        this.user = _user;
     }
 
     /**
@@ -126,13 +137,15 @@ public class ModifyUser implements Serializable {
 //                this.conversation.end();
 //            }
 
-            this.result = this.processModify.process(this.user, this.count,
+            this.future = this.processModify.process(this.user, this.count,
                     this.item.get(0));
 
-            this.log.debug("result: {}", this.result);
+            this.log.debug("future: {}", this.future);
 
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .getFlash().put("result", this.result);
+            this.futuresQueue.add(this.future);
+
+//            FacesContext.getCurrentInstance().getExternalContext()
+//                    .getFlash().put("future", this.future);
 
             return "result.xhtml?faces-redirect=true";
         }

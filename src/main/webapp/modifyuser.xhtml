@@ -16,9 +16,13 @@
     <title>Modify user</title>
 </h:head>
 
+<f:metadata>
+    <f:viewParam name="user" />
+</f:metadata>
+
 <h:body>
     <header>
-        <h2>Modify user #{modifyUser.user}</h2>
+        <h2>Modify user #{modifyUser.user} (#{user})</h2>
     </header>
 
     <main>
@@ -33,6 +37,7 @@
                         <f:selectItem itemValue="hide" itemLabel="hide" />
                         <f:selectItem itemValue="upvote"
                             itemLabel="upvote" />
+                        <f:ajax />
                     </h:selectManyCheckbox>
                 </p>
 
@@ -44,6 +49,7 @@
                         converterMessage="Please enter digits only."
                         validatorMessage="Positive non-zero numbers only.">
                         <f:validateLongRange minimum="1" />
+                        <f:ajax />
                     </h:inputText>
                     <br />
                     <h:message for="count" />
@@ -51,7 +57,9 @@
 
                 <p>
                     <h:commandButton value="Submit"
-                        action="#{modifyUser.submit()}" />
+                        action="#{modifyUser.submit()}">
+                        <f:ajax execute="@form" />
+                    </h:commandButton>
                 </p>
             </h:form>
         </div>

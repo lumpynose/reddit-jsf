@@ -55,10 +55,17 @@ span.messages, div.messages {
 div.indexPart {
     border: 2px solid black;
     margin-bottom: 1em;
+    padding: 1em;
 }
 
 ul.messages {
     background-color: hsl(0, 30%, 90%);
     font-weight: bold;
     margin-bottom: 1em;
+}
+
+p {
+    padding: 0em;
+    margin: 0em;
+    border: 0em;
 }

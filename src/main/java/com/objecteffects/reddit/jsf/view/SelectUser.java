@@ -72,7 +72,7 @@ public class SelectUser implements Serializable {
      * @param _user
      */
     public void setUser(final String _user) {
-        this.log.debug("selected user: {}", _user);
+        this.log.debug("setUser: {}", _user);
 
         if (_user == null || _user.isEmpty()) {
             return;
@@ -80,18 +80,20 @@ public class SelectUser implements Serializable {
 
         this.user = _user;
 
-        final String msg = this.user + " selected.";
-
-        final FacesMessage facesMsg =
-                new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
-
-        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//        final String msg = this.user + " selected.";
+//
+//        final FacesMessage facesMsg =
+//                new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+//
+//        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
 
     /**
      * @return selectUser
      */
     public String getUser() {
+        this.log.debug("getUser: {}", this.user);
+
         return this.user;
     }
 
@@ -135,11 +137,11 @@ public class SelectUser implements Serializable {
         if (this.user == null) {
             this.log.debug("submit: null user");
 
-            return "";
+            return null;
         }
 
-        FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                .put("user", this.user);
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash()
+//                .put("user", this.user);
 
 //        if (this.conversation.isTransient()) {
 //            this.conversation.begin();

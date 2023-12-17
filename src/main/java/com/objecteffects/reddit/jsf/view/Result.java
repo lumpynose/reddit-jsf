@@ -6,9 +6,10 @@ import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 
+import com.objecteffects.reddit.jsf.service.FuturesQueue;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
@@ -25,6 +26,9 @@ public class Result implements Serializable {
     @SuppressWarnings("boxing")
     private Integer counter = 0;
 
+    @Inject
+    private FuturesQueue futuresQueue;
+
 //    @Inject
 //    @ManagedProperty("#{flash.future}")
     private Future<String> future;
@@ -35,10 +39,12 @@ public class Result implements Serializable {
     public void init() {
         this.log.debug("init");
 
-        this.future = (Future<String>) FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getFlash()
-                .get("future");
+//        this.future = (Future<String>) FacesContext.getCurrentInstance()
+//                .getExternalContext()
+//                .getFlash()
+//                .get("future");
+
+        this.future = this.futuresQueue.get();
 
         this.log.debug("future: {}", this.future);
     }
@@ -66,7 +72,7 @@ public class Result implements Serializable {
             return this.future.get();
         }
 
-        return "";
+        return null;
     }
 
     /**

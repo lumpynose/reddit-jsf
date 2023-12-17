@@ -16,6 +16,10 @@
     <title>Select or add user</title>
 </h:head>
 
+<f:metadata>
+    <f:viewParam name="user" value="#{selectUser.user}" />
+</f:metadata>
+
 <h:body>
     <div>
         <header>
@@ -30,21 +34,22 @@
                     </p>
 
                     <p class="selectUser">
-                        <h:outputLabel for="user"
-                            value="Select user:" />
+                        <h:outputLabel for="selectUser" value="Select user:" />
                         <br />
-                        <h:selectOneMenu id="user"
-                            value="#{selectUser.user}"
-                            editable="true">
+<!--                    <h:selectOneMenu id="selectUser" -->
+<!--                          value="#{selectUser.user}" editable="true"> -->
+                        <h:selectOneMenu id="selectUser"
+                            value="#{selectUser.user}" >
                             <f:selectItem itemLabel="Select One"
                                 itemValue="" />
                             <f:selectItems
                                 value="#{selectUser.userNames}" />
+<!--                             <f:ajax /> -->
                         </h:selectOneMenu>
                     </p>
-                    
+
                     <p class="messages">
-                        <h:message for="user" />
+                        <h:message for="selectUser" />
                     </p>
 
                     <p class="addUser">
@@ -54,14 +59,20 @@
                             value="#{selectUser.addUser}">
                             <f:validator validatorId="userValidator" />
                             <f:validateLength minimum="2" />
+<!--                             <f:ajax /> -->
                         </h:inputText>
                     </p>
-                    
-                    <p>
-                        <h:commandButton value="Submit"
-                            action="#{selectUser.submit()}" />
+
+                    <p class="submit">
+<!--                    <h:commandButton value="Submit" -->
+<!--                        action="#{selectUser.submit()}"> -->
+                        <h:commandButton value="submit"
+                            action="modifyuser.xhtml?faces-redirect=true&amp;includeViewParams=true" >
+<!--                        <f:ajax execute="@form" render="@form" /> -->
+                            <f:param name="user" value="#{selectUser.user}" />
+                        </h:commandButton>
                     </p>
-                    
+
                     <p class="messages">
                         <h:message for="addUser" />
                     </p>

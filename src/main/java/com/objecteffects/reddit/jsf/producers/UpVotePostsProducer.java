@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 
-import com.objecteffects.reddit.core.RedditGet;
 import com.objecteffects.reddit.core.RedditPost;
+import com.objecteffects.reddit.method.GetPosts;
 import com.objecteffects.reddit.method.UpVotePosts;
 
 import jakarta.annotation.Priority;
@@ -23,7 +23,7 @@ public class UpVotePostsProducer implements Serializable {
     private transient Logger log;
 
     @Inject
-    private RedditGet rgm;
+    private GetPosts rgp;
 
     @Inject
     private RedditPost rpm;
@@ -39,7 +39,7 @@ public class UpVotePostsProducer implements Serializable {
 
         final UpVotePosts uvp = new UpVotePosts();
 
-        uvp.setGetClient(this.rgm);
+        uvp.setGetPosts(this.rgp);
         uvp.setPostClient(this.rpm);
 
         return uvp;

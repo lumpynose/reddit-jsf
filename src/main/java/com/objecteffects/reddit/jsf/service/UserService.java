@@ -36,7 +36,9 @@ public class UserService implements Serializable {
     public void mergeUser(final RedditUser user) {
         this.log.debug("adding/merging: {}", user);
 
-        this.entityManager.merge(user);
+        if (getUser(user.getId()) != null) {
+            this.entityManager.merge(user);
+        }
     }
 
     /**
@@ -72,7 +74,16 @@ public class UserService implements Serializable {
         cq.distinct(true);
         cq.where(cb.equal(user.get("id"), id));
 
-        return this.entityManager.createQuery(cq).getSingleResult();
+        final List<RedditUser> list =
+                this.entityManager.createQuery(cq).getResultList();
+
+        if (list.isEmpty()) {
+            this.log.debug("getUser: no match: {}", id);
+
+            return null;
+        }
+
+        return list.get(0);
     }
 
     /**
