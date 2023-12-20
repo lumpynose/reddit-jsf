@@ -12,15 +12,15 @@ import com.objecteffects.reddit.jsf.service.ProcessModify;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.annotation.ManagedProperty;
-import jakarta.faces.lifecycle.ClientWindowScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 /**
- *
  */
 @Named
-@ClientWindowScoped
+@ViewScoped
 public class ModifyUser implements Serializable {
     private static final long serialVersionUID = -1L;
 
@@ -61,7 +61,12 @@ public class ModifyUser implements Serializable {
     public void init() {
         this.log.debug("init user: {}", this.user);
 
-//        this.user = (String) FacesContext.getCurrentInstance()
+        final String user2 = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("user");
+
+        this.log.debug("init user2: {}", user2);
+
+        // this.user = (String) FacesContext.getCurrentInstance()
 //                .getExternalContext().getFlash().get("user");
 //
 //        this.log.debug("init user2: {}", this.user);

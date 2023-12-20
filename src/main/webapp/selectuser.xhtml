@@ -64,13 +64,17 @@
                     </p>
 
                     <p class="submit">
-<!--                    <h:commandButton value="Submit" -->
-<!--                        action="#{selectUser.submit()}"> -->
-                        <h:commandButton value="submit"
-                            action="modifyuser.xhtml?faces-redirect=true&amp;includeViewParams=true" >
-<!--                        <f:ajax execute="@form" render="@form" /> -->
+<!--                     <h:commandButton value="Submit" type="submit" -->
+<!--                         action="#{selectUser.submit()}"> -->
+<!--                         <f:ajax execute="@form" render="@form" /> -->
+<!--                         <f:param name="user" value="#{selectUser.user}" /> -->
+<!--                     </h:commandButton> -->
+                       <h:commandButton value="submit"
+                           action="modifyuser.xhtml?faces-redirect=true&amp;includeViewParams=true" >
                             <f:param name="user" value="#{selectUser.user}" />
-                        </h:commandButton>
+                            <f:ajax execute="@form" render="@form" />
+                       </h:commandButton>
+<!--                            action="modifyuser.xhtml?faces-redirect=true" > -->
                     </p>
 
                     <p class="messages">
